@@ -1,4 +1,4 @@
-# glass_ui
+# Glass UI
 
 A new Flutter project.
 
