@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:glass_ui/constants.dart';
 import 'package:glass_ui/screens/featured_row.dart';
 import 'package:glass_ui/screens/header_screen.dart';
 import 'package:glass_ui/theme.dart';
@@ -96,12 +98,35 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        child: BottomNavigationBar(
+          currentIndex: 0,
+          iconSize: 30,
+          backgroundColor: glassColor,
+          // type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.blueGrey.withOpacity(0.4),
+          unselectedItemColor: Colors.blueGrey.withOpacity(0.4),
+          showUnselectedLabels: false,
+          showSelectedLabels: false,
+          items: const [
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.house_fill), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.bag_fill), label: "Shop"),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.chat_bubble_text_fill), label: "SMS")
+          ],
+        ),
+      ),
       body: ListView(
         children: [
           HeaderView(size: size),
           buildRow("Featured"),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             child: Row(
               children: List.generate(featuredRowContent.length,
                   (index) => RowView(image: featuredRowContent[index])),
@@ -110,17 +135,19 @@ class _MyHomePageState extends State<MyHomePage> {
           buildRow("Best Seller"),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             child: Row(
               children: List.generate(bestSellerRowContent.length,
-                      (index) => RowView(image: bestSellerRowContent[index])),
+                  (index) => RowView(image: bestSellerRowContent[index])),
             ),
           ),
           buildRow("New Arrivals"),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             child: Row(
               children: List.generate(newArrivalRowContent.length,
-                      (index) => RowView(image: newArrivalRowContent[index])),
+                  (index) => RowView(image: newArrivalRowContent[index])),
             ),
           ),
         ],
@@ -130,28 +157,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Row buildRow(String text) {
     return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25),
-              child: Text(
-                text,
-                style: const TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "View All",
-                    style: TextStyle(fontSize: 20),
-                  )),
-            )
-          ],
-        );
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          child: Text(
+            text,
+            style: const TextStyle(
+                fontSize: 36, fontWeight: FontWeight.bold, letterSpacing: 2),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TextButton(
+              onPressed: () {},
+              child: const Text(
+                "View All",
+                style: TextStyle(fontSize: 20),
+              )),
+        )
+      ],
+    );
   }
 }
